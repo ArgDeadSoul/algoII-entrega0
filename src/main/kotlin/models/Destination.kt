@@ -2,27 +2,31 @@ package models;
 
 import models.User;
 
-public class Destination {
-    var country = "ARG"
-    var city = "BsAs";
-    val base_cost = 100.00
-    var cost = base_cost
+public class Destination(var country: String = "ARG",
+                         var city: String = "Bs As",
+                         var base_cost: Double = 100.00,
+                         var cost: Double = base_cost
+                        ) {
 
+    private fun setFinalCost(user: User) {
+        var finalCost = this.cost;
 
-    private fun setCost() {
-        var midCost = this.cost;
         if(!isLocal()) {
-            midCost = midCost*1.2;
+            finalCost *= 1.2;
         }
-        if(User().getCountry_of_residence() == country) {
+        if(sameDestination(user)) {
             var disc = 0.00
-            disc = User().getAntiquity() * (base_cost*0.01);
-            midCost = midCost * disc
+            disc = user.antiquity * (base_cost*0.01);
+            finalCost *= disc
         }
-        this.cost = midCost;
+        this.cost = finalCost;
     }
 
     private fun isLocal(): Boolean {
-        return  country == "ARG"
+        return  country.equals("ARG")
+    }
+
+    private fun sameDestination(user: User): Boolean {
+        return user.country_of_residence == this.country
     }
 }

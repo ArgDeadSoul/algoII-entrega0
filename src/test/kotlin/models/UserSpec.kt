@@ -12,8 +12,11 @@ class UserSpec : DescribeSpec({
 
         describe("dado un usuario"){
             val user = User();
-            it("su año de entrada va a ser uno"){
-                user.getAntiquity() shouldBe 1
+            it("su antiguedad"){
+                user.antiquity shouldBe 1
+            }
+            it("su nombre debe ser jhon"){
+                user.name shouldBe "Jhon"
             }
         }
 })

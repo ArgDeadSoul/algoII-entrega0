@@ -3,34 +3,14 @@ package models;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime
 
-class User {
-    val name = "Jhon"
-    val lastname = "Doe"
-    val username = "JoDo"
-    val in_date = LocalDate.now().minusYears(1).toString()
-    val antiquity = 1
-    val country_of_residence = "ARG"
+class User(var name: String = "Jhon",
+           var lastname: String = "Doe",
+           var username: String = "JoDo4",
+           var in_date: LocalDate = LocalDate.now().minusYears(1),
+           var antiquity: Long = Duration.between(in_date.atStartOfDay(), LocalDate.now().atStartOfDay()).toDays() / 365,
+           var country_of_residence: String = "ARG"
+        ) {
 
-    // date format: yyyy-MM-dd
-    //fun User(name, lastname, username, country_of_residence, in_date) {
-    //    this.name = name;
-    //    this.lastname = lastname;
-    //    this.username = username;
-    //    LocalDate new_date = LocalDate.parse(in_date);
-    //    this.in_date = new_date;
-    //    // This functions is to convert from duration to int, to operate
-    //    this.antiquity = (int)Duration.between(LocalDate.now(), this.in_date).toDays() / 365;
-    //    this.country_of_residence = country_of_residence;
-    //}
-
-    @JvmName("getAntiquity1")
-    fun getAntiquity(): Int{
-        return this.antiquity
-    }
-
-    @JvmName("getCountry_of_residence1")
-    fun getCountry_of_residence(): String{
-        return this.country_of_residence;
-    }
 }
