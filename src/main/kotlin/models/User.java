@@ -9,9 +9,10 @@ public class User {
     public String lastname;
     public String username;
     public LocalDate in_date;
-    public static double antiquity;
+    public static int antiquity;
     public static String country_of_residence;
 
+    // date format: yyyy-MM-dd
     public User(String name, String lastname, String username, String country_of_residence, String in_date) {
         this.name = name;
         this.lastname = lastname;
@@ -59,7 +60,7 @@ public class User {
         return antiquity;
     }
 
-    public void setAntiquity(double antiquity) {
+    public void setAntiquity(int antiquity) {
         this.antiquity = antiquity;
     }
 
