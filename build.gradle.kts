@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.10"
-    application
+    kotlin("jvm") version "1.6.10"
+    jacoco
 }
 
 group = "ar.edu.unsam.algo2"
@@ -12,18 +12,49 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation(kotlin("test"))
-}
+val kotestVersion = "5.1.0"
 
-tasks.test {
-    useJUnitPlatform()
+dependencies {
+    implementation(kotlin("stdlib"))
+    testImplementation("io.mockk:mockk:1.12.2")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
+    testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "14"
+    }
 }
 
-application {
-    mainClass.set("MainKt")
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.isEnabled = true
+        csv.isEnabled = false
+        html.isEnabled = false
+    }
+}
+
+tasks.register("runOnGitHub") {
+    dependsOn("jacocoTestReport")
+    group = "custom"
+    description = "$ ./gradlew runOnGitHub # runs on GitHub Action"
 }
