@@ -1,39 +1,21 @@
 package models;
 
-import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
 import models.User;
 
-import static org.junit.jupiter.api.Assertions.*;
+import io.kotest.assertions.throwables.shouldThrow;
+import io.kotest.core.spec.IsolationMode;
+import io.kotest.core.spec.style.DescribeSpec;
+import io.kotest.matchers.shouldBe;
 
-class UserTest {
 
-    private User testUser = new User("Jhon", "Smith", "username123", "ARG", LocalDate.now().minusYears(1).toString());
+class UserTest : DescribeSpec({
+        isolationMode = IsolationMode.InstancePerTest
 
-    @Test
-    void getName() {
-    }
-
-    @Test
-    void getLastname() {
-    }
-
-    @Test
-    void getUsername() {
-    }
-
-    @Test
-    void getIn_date() {
-    }
-
-    @Test
-    void getAntiquity() {
-        int expected = 1;
-        assertEquals(expected, testUser.getAntiquity());
-    }
-
-    @Test
-    void getCountry_of_residence() {
-    }
-}
+        describe("dado un auto"){
+            val user = User("Jhon","Smith","username123","ARG",LocalDate.now().minusYears(1).toString());
+            it("su año de entrada va a ser uno"){
+                user.getAntiquity() shouldBe 1
+            }
+        }
+})
